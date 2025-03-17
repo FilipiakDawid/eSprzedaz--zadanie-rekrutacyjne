@@ -13,6 +13,7 @@ use UseCases\Contracts\Pet\IPetService;
 use UseCases\Contracts\Pet\Entities\IPet;
 use UseCases\Contracts\Requests\IPetStatus;
 use UseCases\Contracts\Requests\IPetRequest;
+use UseCases\Contracts\Requests\IUpdatePetRequest;
 
 class PetService implements IPetService
 {
@@ -53,6 +54,20 @@ class PetService implements IPetService
     public function create(IPetRequest $pet_request): int
     {
         $response = $this->http->post("https://petstore.swagger.io/v2/pet", [
+            'category' => $pet_request->getCategory(),
+            'name' => $pet_request->getName(),
+            'tags' => $pet_request->getTags(),
+            'status' => $pet_request->getStatus(),
+            'photoUrls' => $pet_request->getPhotoUrls(),
+        ]);
+
+        return $response->json('id');
+    }
+
+    public function update(IUpdatePetRequest $pet_request): int
+    {
+        $response = $this->http->put("https://petstore.swagger.io/v2/pet", [
+            'id' =>  $pet_request->getPetId(),
             'category' => $pet_request->getCategory(),
             'name' => $pet_request->getName(),
             'tags' => $pet_request->getTags(),
