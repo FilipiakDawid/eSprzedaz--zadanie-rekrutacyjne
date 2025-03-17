@@ -15,11 +15,11 @@
 
             <strong>Photos:</strong>
             @foreach ($pet->getPhotoUrls() as $photo)
-                <img src="{{ $photo }}" alt="photo"/>
+                {{ $photo }}
             @endforeach
         </div>
 
         <br>
-        <a href="" class="btn btn-primary">Edit</a>
+        <a href="{{ route('pet.edit', ['id' => $pet->getId()]) }}"  class="btn btn-primary">Edit</a>
     </div>
 @endsection

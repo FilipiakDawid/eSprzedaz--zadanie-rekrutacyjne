@@ -17,7 +17,7 @@ class CreatePetRequest extends FormRequest implements IPetRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'category' => ['nullable', 'array'],
-            'category.*.name' => ['required', 'string', 'max:255'],
+            'category.name' => ['required', 'string', 'max:255'],
             'photo_urls' => ['required', 'array'],
             'photo_urls.*' => ['required', 'string', 'max:255'],
             'status' => ['required', Rule::enum(PetStatus::class)],

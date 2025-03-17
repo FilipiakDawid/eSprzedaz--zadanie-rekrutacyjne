@@ -3,7 +3,9 @@
 @section('content')
     <div class="container">
         <h2>Pet List</h2>
-
+        <div class="m-2 d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{{ route('pet.create') }}" class="btn btn-success btn-sm">Create new pet</a>
+        </div>
         <form method="GET" action="{{ route('index') }}" class="mb-3">
             <label for="filter">Filter by status:</label>
             <select name="status" id="filter" onchange="this.form.submit()" class="form-select w-auto d-inline-block">
@@ -33,7 +35,7 @@
                     <td>{{ $pet['status'] }}</td>
                     <td>
                         <a href="{{ route('pet.show', ['id' => $pet['id']]) }}" class="btn btn-info btn-sm">Show</a>
-                        <a href="" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('pet.edit', ['id' => $pet['id']]) }}" class="btn btn-warning btn-sm">Edit</a>
                     </td>
                 </tr>
             @endforeach

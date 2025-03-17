@@ -37,7 +37,9 @@ class PetController extends Controller
 
     public function create()
     {
-        return view('pet.create');
+        return view('pet.create', [
+            'statuses' => PetStatus::values(),
+        ]);
     }
 
     public function store(
@@ -51,18 +53,23 @@ class PetController extends Controller
     }
 
     public function edit(
-        GetPet $get_pet,
         int $id,
+        GetPet $get_pet,
     )
     {
         $pet = $get_pet->getById($id);
+        $statuses = PetStatus::values();
 
-        return view('pet.edit', ['pet' => $pet]);
+        return view('pet.edit', [
+            'pet' => $pet,
+            'statuses' => $statuses,
+        ]);
     }
 
     public function update(
         UpdatePetRequest $request,
         Update $update,
+        int $id
     )
     {
         $update->update($request);
