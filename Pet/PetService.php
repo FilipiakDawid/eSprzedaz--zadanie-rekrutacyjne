@@ -12,6 +12,7 @@ use Illuminate\Http\Client\Factory;
 use UseCases\Contracts\Pet\IPetService;
 use UseCases\Contracts\Pet\Entities\IPet;
 use UseCases\Contracts\Requests\IPetStatus;
+use UseCases\Contracts\Requests\IPetRequest;
 
 class PetService implements IPetService
 {
@@ -47,5 +48,18 @@ class PetService implements IPetService
         );
 
         return $pet;
+    }
+
+    public function create(IPetRequest $pet_request): int
+    {
+        $response = $this->http->post("https://petstore.swagger.io/v2/pet", [
+            'category' => $pet_request->getCategory(),
+            'name' => $pet_request->getName(),
+            'tags' => $pet_request->getTags(),
+            'status' => $pet_request->getStatus(),
+            'photoUrls' => $pet_request->getPhotoUrls(),
+        ]);
+
+        return $response->json('id');
     }
 }
