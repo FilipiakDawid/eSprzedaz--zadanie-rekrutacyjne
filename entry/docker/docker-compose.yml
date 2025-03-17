@@ -22,7 +22,7 @@ services:
     ports:
       - "6001:6001"
     expose:
-      - "9003"
+      - "9000"
     volumes:
       - ../../:/var/www
     working_dir: /var/www
