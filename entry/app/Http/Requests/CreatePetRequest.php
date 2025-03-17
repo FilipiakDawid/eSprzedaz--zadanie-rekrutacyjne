@@ -16,7 +16,7 @@ class CreatePetRequest extends FormRequest implements IPetRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'category' => ['array'],
+            'category' => ['nullable', 'array'],
             'category.*.name' => ['required', 'string', 'max:255'],
             'photo_urls' => ['required', 'array'],
             'photo_urls.*' => ['required', 'string', 'max:255'],
@@ -41,7 +41,7 @@ class CreatePetRequest extends FormRequest implements IPetRequest
 
     public function getCategory(): array
     {
-        return $this->input('category');
+        return $this->input('category') ?? [];
     }
 
     public function getPhotoUrls(): array
