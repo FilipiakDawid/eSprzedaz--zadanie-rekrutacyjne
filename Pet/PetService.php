@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Pet;
 
+use Pet\Entities\Pet;
+use Pet\Entities\Category;
+use App\Models\Enums\PetStatus;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Client\Factory;
 use UseCases\Contracts\Pet\IPetService;
+use UseCases\Contracts\Pet\Entities\IPet;
 use UseCases\Contracts\Requests\IPetStatus;
 
 class PetService implements IPetService
@@ -24,5 +28,24 @@ class PetService implements IPetService
         ]);
 
         return $response->collect()->mapInto(Collection::class);
+    }
+
+    public function findById(int $id): IPet
+    {
+        $response = $this->http->withUrlParameters([
+            'id' => $id,
+        ])->get("https://petstore.swagger.io/v2/pet/{id}");
+
+        $category = new Category($response->json('category.id'), $response->json('category.name'));
+
+        $pet = new Pet(
+            $response->json('id'),
+            $category, $response->json('name'),
+            $response->collect('photoUrls'),
+            $response->collect('tags'),
+            PetStatus::from($response->json('status')),
+        );
+
+        return $pet;
     }
 }
