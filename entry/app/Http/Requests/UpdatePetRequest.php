@@ -23,11 +23,16 @@ class UpdatePetRequest extends FormRequest implements IUpdatePetRequest
             'photo_urls' => ['required', 'array'],
             'photo_urls.*' => ['required', 'string', 'max:255'],
             'status' => ['required', Rule::enum(PetStatus::class)],
-            'tags' => ['required', 'array'],
-            'tags.*' => ['required', 'array'],
+            'tags' => ['array'],
+            'tags.*' => ['array'],
             'tags.*.id' => ['nullable', 'integer'],
             'tags.*.name' => ['nullable', 'string', 'max:255'],
         ];
+    }
+
+    public function prepareForValidation(): void
+    {
+        $this->request->add(['id' => $this->route()->parameter('id')]);
     }
 
     public function getPetId(): int
@@ -47,7 +52,7 @@ class UpdatePetRequest extends FormRequest implements IUpdatePetRequest
 
     public function getTags(): Collection
     {
-        return $this->collect('tags');
+        return $this->collect('tags') ?? new Collection();
     }
 
     public function getCategory(): array
@@ -58,5 +63,10 @@ class UpdatePetRequest extends FormRequest implements IUpdatePetRequest
     public function getPhotoUrls(): array
     {
         return $this->input('photo_urls');
+    }
+
+    public function getId(): int
+    {
+        return $this->getId();
     }
 }

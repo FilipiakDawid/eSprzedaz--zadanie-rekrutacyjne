@@ -14,18 +14,28 @@ use UseCases\Contracts\Pet\Entities\IPet;
 use UseCases\Contracts\Requests\IPetStatus;
 use UseCases\Contracts\Requests\IPetRequest;
 use UseCases\Contracts\Requests\IUpdatePetRequest;
+use Illuminate\Contracts\Config\Repository as ConfigContract;
 
 class PetService implements IPetService
 {
+    private Factory $http;
+    private string $header;
+    private string $secret;
 
     public function __construct(
-        private Factory $http
+        Factory $http,
+        ConfigContract $config
     ) {
+        $this->header = $config->get('pets.authorization_header');
+        $this->secret = $config->get('pets.authorization_secret');
+        $this->http = $http;
     }
 
     public function get(IPetStatus $pet_status): Collection
     {
-        $response = $this->http->get("https://petstore.swagger.io/v2/pet/findByStatus", [
+        $response = $this->http
+            ->withHeader($this->header, $this->secret)
+            ->get("https://petstore.swagger.io/v2/pet/findByStatus", [
             'status' => $pet_status->getStatus(),
         ]);
 
@@ -34,7 +44,9 @@ class PetService implements IPetService
 
     public function findById(int $id): IPet
     {
-        $response = $this->http->withUrlParameters([
+        $response = $this->http
+            ->withHeader($this->header, $this->secret)
+            ->withUrlParameters([
             'id' => $id,
         ])->get("https://petstore.swagger.io/v2/pet/{id}");
 
@@ -53,7 +65,10 @@ class PetService implements IPetService
 
     public function create(IPetRequest $pet_request): int
     {
-        $response = $this->http->post("https://petstore.swagger.io/v2/pet", [
+        $response = $this->http
+            ->withHeader($this->header, $this->secret)
+            ->post("https://petstore.swagger.io/v2/pet", [
+            'id' => $pet_request->getId(),
             'category' => $pet_request->getCategory(),
             'name' => $pet_request->getName(),
             'tags' => $pet_request->getTags(),
@@ -66,8 +81,10 @@ class PetService implements IPetService
 
     public function update(IUpdatePetRequest $pet_request): int
     {
-        $response = $this->http->put("https://petstore.swagger.io/v2/pet", [
-            'id' =>  $pet_request->getPetId(),
+        $response = $this->http
+            ->withHeader($this->header, $this->secret)
+            ->put("https://petstore.swagger.io/v2/pet", [
+            'id' =>  $pet_request->getId(),
             'category' => $pet_request->getCategory(),
             'name' => $pet_request->getName(),
             'tags' => $pet_request->getTags(),

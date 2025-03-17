@@ -74,6 +74,6 @@ class PetController extends Controller
     {
         $update->update($request);
 
-        return redirect()->route('pet.show', ['id' => $request->getPetId()]);
+        return redirect()->route('pet.show', ['id' => $request->getId()]);
     }
 }

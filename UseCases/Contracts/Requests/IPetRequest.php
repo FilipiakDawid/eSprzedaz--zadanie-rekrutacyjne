@@ -9,6 +9,8 @@ use Illuminate\Support\Collection;
 
 interface IPetRequest
 {
+    public function getId(): int;
+
     public function getName(): string;
 
     public function getStatus(): PetStatus;

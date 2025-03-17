@@ -22,6 +22,7 @@ trait PetServiceTrait
         $photo_urls = ['url'];
 
         $request = m::mock(IPetRequest::class);
+        $request->expects('getId')->andReturn(1);
         $request->expects('getName')->andReturn('New Pet');
         $request->expects('getStatus')->andReturn(PetStatus::Available);
         $request->expects('getTags')->andReturn($tags);
