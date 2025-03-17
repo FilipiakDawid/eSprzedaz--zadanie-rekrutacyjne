@@ -20,7 +20,7 @@ class PetControllerTest extends TestCase
     }
 
     #[Test]
-    public function create(): void
+    public function edit(): void
     {
         // GIVEN
         $pet = $this->mockPetResponse();
