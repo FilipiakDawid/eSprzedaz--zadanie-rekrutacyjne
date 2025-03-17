@@ -47,4 +47,14 @@ class PetController extends Controller
 
         return redirect()->route('pet.show', ['id' => $id]);
     }
+
+    public function edit(
+        GetPet $get_pet,
+        int $id,
+    )
+    {
+        $pet = $get_pet->getById($id);
+
+        return view('pet.edit', ['pet' => $pet]);
+    }
 }

@@ -9,3 +9,5 @@ Route::get('/pet/create', [PetController::class, 'create'])->name('pet.create');
 Route::get('/pet/{id}', [PetController::class, 'show'])->name('pet.show');
 Route::post('/pet', [PetController::class, 'store'])->name('pet.store');
 
+Route::get('/pet/{id}/edit', [PetController::class, 'edit'])->name('pet.edit');
+
