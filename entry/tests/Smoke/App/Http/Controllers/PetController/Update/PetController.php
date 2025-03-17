@@ -2,32 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Pet\PetService\Update;
+namespace Tests\Smoke\App\Http\Controllers\PetController\Update;
 
 use Tests\TestCase;
-use Pet\PetService;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
 
-class PetServiceTest extends TestCase
+class PetController extends TestCase
 {
-    use PetServiceTrait;
-
-    private PetService $pet_service;
+    use PetControllerTrait;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->pet_service = $this->app->make(PetService::class);
         Http::preventStrayRequests();
+
     }
 
     #[Test]
     public function update(): void
     {
         // GIVEN
-        $request = $this->mockRequest();
+        $request = $this->makeRequest();
         $response = $this->mockResponse();
 
         Http::fake([
@@ -35,10 +32,11 @@ class PetServiceTest extends TestCase
         ]);
 
         // WHEN
-        $result = $this->pet_service->update($request);
+        $response = $this
+            ->put(route('pet.update', $request))
+        ;
 
         // THEN
-        Http::assertSentCount(1);
-        $this->assertSame(1, $result);
+        $response->assertRedirect(route('pet.show', ['id' => 1]));
     }
 }

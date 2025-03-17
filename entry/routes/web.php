@@ -10,4 +10,5 @@ Route::get('/pet/{id}', [PetController::class, 'show'])->name('pet.show');
 Route::post('/pet', [PetController::class, 'store'])->name('pet.store');
 
 Route::get('/pet/{id}/edit', [PetController::class, 'edit'])->name('pet.edit');
+Route::put('/pet', [PetController::class, 'update'])->name('pet.update');
 
