@@ -32,7 +32,7 @@
                     <td>{{ $pet['category']['name'] ?? ''}}</td>
                     <td>{{ $pet['status'] }}</td>
                     <td>
-                        <a href="" class="btn btn-info btn-sm">Show</a>
+                        <a href="{{ route('pet.show', ['id' => $pet['id']]) }}" class="btn btn-info btn-sm">Show</a>
                         <a href="" class="btn btn-warning btn-sm">Edit</a>
                     </td>
                 </tr>
