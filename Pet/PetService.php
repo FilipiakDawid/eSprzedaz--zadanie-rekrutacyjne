@@ -21,21 +21,24 @@ class PetService implements IPetService
     private Factory $http;
     private string $header;
     private string $secret;
+    private UrlGenerator $url;
 
     public function __construct(
         Factory $http,
-        ConfigContract $config
+        ConfigContract $config,
+        UrlGenerator $url,
     ) {
         $this->header = $config->get('pets.authorization_header');
         $this->secret = $config->get('pets.authorization_secret');
         $this->http = $http;
+        $this->url = $url;
     }
 
     public function get(IPetStatus $pet_status): Collection
     {
         $response = $this->http
             ->withHeader($this->header, $this->secret)
-            ->get("https://petstore.swagger.io/v2/pet/findByStatus", [
+            ->get($this->url->findByStatus(), [
             'status' => $pet_status->getStatus(),
         ]);
 
@@ -48,7 +51,8 @@ class PetService implements IPetService
             ->withHeader($this->header, $this->secret)
             ->withUrlParameters([
             'id' => $id,
-        ])->get("https://petstore.swagger.io/v2/pet/{id}");
+            ])->get($this->url->findById())
+        ;
 
         $category = new Category($response->json('category.id'), $response->json('category.name'));
 
@@ -67,7 +71,7 @@ class PetService implements IPetService
     {
         $response = $this->http
             ->withHeader($this->header, $this->secret)
-            ->post("https://petstore.swagger.io/v2/pet", [
+            ->post($this->url->create(), [
             'id' => $pet_request->getId(),
             'category' => $pet_request->getCategory(),
             'name' => $pet_request->getName(),
@@ -83,7 +87,7 @@ class PetService implements IPetService
     {
         $response = $this->http
             ->withHeader($this->header, $this->secret)
-            ->put("https://petstore.swagger.io/v2/pet", [
+            ->put($this->url->update(), [
             'id' =>  $pet_request->getId(),
             'category' => $pet_request->getCategory(),
             'name' => $pet_request->getName(),
