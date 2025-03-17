@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use UseCases\Contracts\Pet\Entities\IPet;
 use UseCases\Contracts\Requests\IPetStatus;
 use UseCases\Contracts\Requests\IPetRequest;
+use UseCases\Contracts\Requests\IUpdatePetRequest;
 
 interface IPetService
 {
@@ -16,4 +17,6 @@ interface IPetService
     public function findById(int $id): IPet;
 
     public function create(IPetRequest $pet_request): int;
+
+    public function update(IUpdatePetRequest $pet_request): int;
 }
