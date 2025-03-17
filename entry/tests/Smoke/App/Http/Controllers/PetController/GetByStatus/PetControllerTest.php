@@ -25,7 +25,7 @@ class PetControllerTest extends TestCase
 
         // WHEN
         $response = $this
-            ->get(route('index'))
+            ->get(route('index', ['status' => PetStatus::Available]))
         ;
 
         // THEN
