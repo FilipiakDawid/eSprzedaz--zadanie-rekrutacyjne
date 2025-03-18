@@ -9,6 +9,7 @@ use UseCases\Contracts\Pet\Entities\IPet;
 use UseCases\Contracts\Requests\IPetStatus;
 use UseCases\Contracts\Requests\IPetRequest;
 use UseCases\Contracts\Pet\Entities\IStatus;
+use UseCases\Contracts\Requests\IFileRequest;
 use UseCases\Contracts\Requests\IUpdatePetRequest;
 
 interface IPetService
@@ -22,4 +23,6 @@ interface IPetService
     public function update(IUpdatePetRequest $pet_request): int;
 
     public function delete(int $id): IStatus;
+
+    public function uploadImage(IFileRequest $file_request, int $id): IStatus;
 }
