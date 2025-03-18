@@ -22,16 +22,19 @@ class PetService implements IPetService
     private string $header;
     private string $secret;
     private UrlGenerator $url;
+    private ResponseFactory $response_factory;
 
     public function __construct(
         Factory $http,
         ConfigContract $config,
         UrlGenerator $url,
+        ResponseFactory $response_factory
     ) {
         $this->header = $config->get('pets.authorization_header');
         $this->secret = $config->get('pets.authorization_secret');
         $this->http = $http;
         $this->url = $url;
+        $this->response_factory = $response_factory;
     }
 
     public function get(IPetStatus $pet_status): Collection
@@ -44,7 +47,7 @@ class PetService implements IPetService
                 'status' => $statuses,
         ]);
 
-        return $response->collect()->mapInto(Collection::class);
+        return $this->response_factory->proceedPetsResponse($response);
     }
 
     public function findById(int $id): IPet

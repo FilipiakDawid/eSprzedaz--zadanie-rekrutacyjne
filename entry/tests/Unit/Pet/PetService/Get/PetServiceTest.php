@@ -14,13 +14,10 @@ class PetServiceTest extends TestCase
 {
     use PetServiceTrait;
 
-    private PetService $pet_service;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->pet_service = $this->app->make(PetService::class);
         Http::preventStrayRequests();
     }
 
@@ -30,12 +27,16 @@ class PetServiceTest extends TestCase
         // GIVEN
         $pet_status = $this->mockPetStatus();
         $response = $this->mockResponse();
+        $this->mockResponseFactory($response);
+
         Http::fake([
             'https://petstore.swagger.io/v2/pet/findByStatus?status=available' => Http::response($response, 200),
         ]);
 
+        $pet_service = $this->app->make(PetService::class);
+
         // WHEN
-        $result = $this->pet_service->get($pet_status);
+        $result = $pet_service->get($pet_status);
 
         // THEN
         Http::assertSentCount(1);
