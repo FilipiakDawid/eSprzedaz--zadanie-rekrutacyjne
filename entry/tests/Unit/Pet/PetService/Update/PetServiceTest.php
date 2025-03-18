@@ -6,6 +6,7 @@ namespace Tests\Unit\Pet\PetService\Update;
 
 use Tests\TestCase;
 use Pet\PetService;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -38,7 +39,10 @@ class PetServiceTest extends TestCase
         $result = $pet_service->update($request);
 
         // THEN
-        Http::assertSentCount(1);
+        Http::assertSent(function (Request $request) {
+            return $request->hasHeader('api_key', 'test') &&
+                $request->method() == 'PUT';
+        });
         $this->assertSame(1, $result);
     }
 }

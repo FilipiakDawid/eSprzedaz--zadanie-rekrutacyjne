@@ -7,6 +7,7 @@ namespace Tests\Unit\Pet\PetService\Get;
 use Tests\TestCase;
 use Pet\PetService;
 use Illuminate\Support\Collection;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -39,8 +40,10 @@ class PetServiceTest extends TestCase
         $result = $pet_service->get($pet_status);
 
         // THEN
-        Http::assertSentCount(1);
+        Http::assertSent(function (Request $request) {
+            return $request->hasHeader('api_key', 'test') &&
+                $request->method() == 'GET';
+        });
         $this->assertInstanceOf(Collection::class, $result);
-
     }
 }

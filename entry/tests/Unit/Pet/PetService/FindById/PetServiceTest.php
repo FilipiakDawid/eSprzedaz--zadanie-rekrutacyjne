@@ -7,6 +7,7 @@ namespace Tests\Unit\Pet\PetService\FindById;
 use Tests\TestCase;
 use Pet\PetService;
 use App\Models\Enums\PetStatus;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -41,6 +42,10 @@ class PetServiceTest extends TestCase
         $category = $result->getCategory();
         $this->assertSame(1, $category->getId());
         $this->assertSame('cate', $category->getName());
+        Http::assertSent(function (Request $request) {
+            return $request->hasHeader('api_key', 'test') &&
+                $request->method() == 'GET';
+        });
     }
 
     protected function setUp(): void
