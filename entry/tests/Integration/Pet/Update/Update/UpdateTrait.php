@@ -24,7 +24,7 @@ trait UpdateTrait
         $photo_urls = ['updated url', 'new url'];
 
         $request = m::mock(IUpdatePetRequest::class);
-        $request->expects('getPetId')->andReturn(1);
+        $request->expects('getId')->andReturn(1);
         $request->expects('getName')->andReturn('Updated Pet');
         $request->expects('getStatus')->andReturn(PetStatus::Available);
         $request->expects('getTags')->andReturn($tags);

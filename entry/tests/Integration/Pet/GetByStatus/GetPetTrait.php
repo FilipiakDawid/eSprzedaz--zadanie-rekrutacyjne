@@ -13,7 +13,7 @@ trait GetPetTrait
     public function mockPetStatus(): IPetStatus
     {
         $m = m::mock(IPetStatus::class);
-        $m->expects('getStatus')->andReturn(PetStatus::from('available'));
+        $m->expects('getStatus')->andReturn([PetStatus::Available->value]);
 
         return $m;
     }

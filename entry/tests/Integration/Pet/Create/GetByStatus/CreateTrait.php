@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Pet\Create\GetByStatus;
 
+use Mockery as m;
 use App\Models\Enums\PetStatus;
 use Illuminate\Support\Collection;
 use UseCases\Contracts\Requests\IPetRequest;
-use Mockery as m;
 
 trait CreateTrait
 {
@@ -22,6 +22,7 @@ trait CreateTrait
         $photo_urls = ['url'];
 
         $request = m::mock(IPetRequest::class);
+        $request->expects('getId')->andReturn(1);
         $request->expects('getName')->andReturn('New Pet');
         $request->expects('getStatus')->andReturn(PetStatus::Available);
         $request->expects('getTags')->andReturn($tags);

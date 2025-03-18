@@ -6,7 +6,6 @@ namespace Tests\Unit\Pet\PetService\Get;
 
 use Mockery as m;
 use Pet\ResponseFactory;
-use Illuminate\Http\Response;
 use App\Models\Enums\PetStatus;
 use Illuminate\Support\Collection;
 use UseCases\Contracts\Requests\IPetStatus;
@@ -22,7 +21,7 @@ trait PetServiceTrait
         return $m;
     }
 
-    public function mockResponseFactory(Response $response): void
+    public function mockResponseFactory(array $response): void
     {
         $m = m::mock(ResponseFactory::class);
         $collection = new Collection($response);

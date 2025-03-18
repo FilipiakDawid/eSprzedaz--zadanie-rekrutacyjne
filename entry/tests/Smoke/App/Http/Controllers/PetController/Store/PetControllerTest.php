@@ -24,11 +24,17 @@ class PetControllerTest extends TestCase
     {
         // GIVEN
         $input_data = [
+            'id' => 1,
             'name' => 'Pet',
             'photo_urls' => ['url1', 'url2'],
             'status' => PetStatus::Available,
-            'category' => [],
-            'tags' => []
+            'category' => [
+                'name' => 'Category',
+                'id' => 1,
+            ],
+            'tags' => [
+                ['name' => 'Tag 1'],
+            ],
         ];
         $response = [
             'id' => 1,
