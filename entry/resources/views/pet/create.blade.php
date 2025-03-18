@@ -54,7 +54,7 @@
             <div>
                 <div class="form-group">
                     <label for="tag1">URL 1:</label>
-                    <input type="number" name="tags[1][id]" id="tag_id1" class="form-control" placeholder="Tag id" required>
+                    <input type="number" name="tags[1][id]" id="tag_id1" class="form-control" placeholder="Tag id" min="1" required>
                     <input type="text" name="tags[1][name]" id="tag_name1" class="form-control" placeholder="Tag name" required>
                 </div>
                 <div id="tag-fields"></div>
@@ -104,7 +104,7 @@
                 var newTagField = `
                 <div class="form-group">
                     <label for="tag${count}">Tag ${count}:</label>
-                    <input type="number" name="tags[${count}][id]" id="tag_id${count}" class="form-control" required>
+                    <input type="number" name="tags[${count}][id]" id="tag_id${count}" class="form-control" min="1" required>
                     <input type="text" name="tags[${count}][name]" id="tag_name${count}" class="form-control" required>
                     <button type="button" class="btn btn-danger btn-sm remove-tag">Remove</button>
                 </div>

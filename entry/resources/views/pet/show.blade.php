@@ -22,7 +22,7 @@
         <br>
         <a href="{{ route('pet.edit', ['id' => $pet->getId()]) }}"  class="btn btn-primary">Edit</a>
 
-        <form id="delete-form" class="mt-2" method="POST" action="{{ route('pet.delete', ['id' => $pet->getId()]) }}">
+        <form onsubmit="return confirm('Are you sure?');" id="delete-form" class="mt-2" method="POST" action="{{ route('pet.delete', ['id' => $pet->getId()]) }}">
             @csrf
             @method('DELETE')
 
