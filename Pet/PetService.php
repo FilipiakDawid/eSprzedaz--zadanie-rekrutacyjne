@@ -59,17 +59,8 @@ class PetService implements IPetService
             ])->get($this->url->findById())
         ;
 
-        $category = new Category($response->json('category.id'), $response->json('category.name'));
 
-        $pet = new Pet(
-            $response->json('id'),
-            $category, $response->json('name'),
-            $response->collect('photoUrls'),
-            $response->collect('tags'),
-            PetStatus::from($response->json('status')),
-        );
-
-        return $pet;
+        return $this->response_factory->proceedPetResponse($response);
     }
 
     public function create(IPetRequest $pet_request): int

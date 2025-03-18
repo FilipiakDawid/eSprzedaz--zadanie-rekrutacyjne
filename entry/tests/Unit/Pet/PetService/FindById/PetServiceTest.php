@@ -20,14 +20,16 @@ class PetServiceTest extends TestCase
     public function findById(): void
     {
         // GIVEN
-        $response = $this->mockResponse();
-
+        $response = $this->mockPet();
+        $this->mockResponseFactory($response);
         Http::fake([
             'https://petstore.swagger.io/v2/pet/1' => Http::response($response, 200),
         ]);
 
+        $pet_service = $this->app->make(PetService::class);
+
         // WHEN
-        $result = $this->pet_service->findById(1);
+        $result = $pet_service->findById(1);
 
         // THEN
         $this->assertSame(1, $result->getId());
@@ -45,7 +47,6 @@ class PetServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->pet_service = $this->app->make(PetService::class);
         Http::preventStrayRequests();
     }
 }
