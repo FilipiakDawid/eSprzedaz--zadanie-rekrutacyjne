@@ -14,12 +14,12 @@ class GetPetByStatusRequest extends FormRequest implements IPetStatus
     public function rules(): array
     {
         return [
-            'status' => ['nullable', Rule::enum(PetStatus::class)],
+            'status' => ['array', Rule::in([PetStatus::Sold, PetStatus::Available, PetStatus::Pending])],
         ];
     }
 
-    public function getStatus(): PetStatus
+    public function getStatus(): array
     {
-        return $this->enum('status', PetStatus::class) ?? PetStatus::Available;
+        return $this->input('status', [PetStatus::Available->value]);
     }
 }

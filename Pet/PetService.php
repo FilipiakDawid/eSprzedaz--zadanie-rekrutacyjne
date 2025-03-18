@@ -36,10 +36,12 @@ class PetService implements IPetService
 
     public function get(IPetStatus $pet_status): Collection
     {
+        $statuses = implode(',', $pet_status->getStatus());
+
         $response = $this->http
             ->withHeader($this->header, $this->secret)
             ->get($this->url->findByStatus(), [
-            'status' => $pet_status->getStatus(),
+                'status' => $statuses,
         ]);
 
         return $response->collect()->mapInto(Collection::class);

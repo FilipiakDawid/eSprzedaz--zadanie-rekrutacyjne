@@ -6,15 +6,16 @@
         <div class="m-2 d-grid gap-2 d-md-flex justify-content-md-end">
             <a href="{{ route('pet.create') }}" class="btn btn-success btn-sm">Create new pet</a>
         </div>
-        <form method="GET" action="{{ route('index') }}" class="mb-3">
-            <label for="filter">Filter by status:</label>
-            <select name="status" id="filter" onchange="this.form.submit()" class="form-select w-auto d-inline-block">
-                @foreach($statuses as $status)
-                    <option value="{{ $status }}">
+        <form method="GET" action="{{ url('/') }}" class="mb-3">
+            <label for="filter">Filter by statuses:</label>
+            <select name="status[]" id="filter" class="form-select" multiple>
+                @foreach($statuses as $key => $status)
+                    <option {{ in_array($key, $selected_status) ? 'selected' : '' }} value="{{ $key }}">
                         {{ $status }}
                     </option>
                 @endforeach
             </select>
+            <button type="submit" class="btn btn-primary">Filter</button>
         </form>
 
         <table class="table table-striped">

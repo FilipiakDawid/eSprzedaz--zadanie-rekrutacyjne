@@ -19,10 +19,11 @@ class PetController extends Controller
     {
         $statuses = PetStatus::values();
         $collection = $get_pet->getByStatus($request);
+
         return view('pet.index', [
             'pets' => $collection,
             'statuses' => $statuses,
-            'status' => $request->getStatus(),
+            'selected_status' => $request->getStatus(),
         ]);
     }
 
