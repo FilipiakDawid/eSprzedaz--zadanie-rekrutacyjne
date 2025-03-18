@@ -1,1 +1,1 @@
-# eSprzeda--zadanie-rekrutacyjne
+Application that communicates with the REST API: https://petstore.swagger.io/ using the /pet resource.
