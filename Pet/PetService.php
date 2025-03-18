@@ -11,6 +11,7 @@ use UseCases\Contracts\Pet\Entities\IPet;
 use UseCases\Contracts\Requests\IPetStatus;
 use UseCases\Contracts\Requests\IPetRequest;
 use UseCases\Contracts\Pet\Entities\IStatus;
+use UseCases\Contracts\Requests\IFileRequest;
 use UseCases\Contracts\Requests\IUpdatePetRequest;
 use Illuminate\Contracts\Config\Repository as ConfigContract;
 
@@ -100,6 +101,20 @@ class PetService implements IPetService
             ->withUrlParameters([
                 'id' => $id,
             ])->delete($this->url->findById())
+        ;
+
+        return $this->response_factory->proceedRemoveResponse($response);
+    }
+
+    public function uploadImage(IFileRequest $file_request, int $id): IStatus
+    {
+        $response = $this->http
+            ->withHeader($this->header, $this->secret)
+            ->withUrlParameters([
+                'id' => $id,
+            ])
+            ->attach($file_request->getFileName(), $file_request->getFile())
+            ->post($this->url->uploadImage())
         ;
 
         return $this->response_factory->proceedRemoveResponse($response);

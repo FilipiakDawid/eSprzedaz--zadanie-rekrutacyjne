@@ -16,5 +16,6 @@ return [
 
     'find_by_status' => 'findByStatus',
     'find_by_id' => '{id}',
+    'upload_image' => '{id}/uploadImage',
 
 ];

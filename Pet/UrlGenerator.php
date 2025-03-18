@@ -38,4 +38,9 @@ class UrlGenerator
         return $this->base_url;
     }
 
+    public function uploadImage(): string
+    {
+        return $this->base_url . '/' . $this->config->get('pets.upload_image');
+    }
+
 }
