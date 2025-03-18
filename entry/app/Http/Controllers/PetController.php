@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use UseCases\Pet\GetPet;
 use UseCases\Pet\Create;
 use UseCases\Pet\Update;
+use UseCases\Pet\Delete;
 use App\Models\Enums\PetStatus;
 use App\Http\Requests\CreatePetRequest;
 use App\Http\Requests\UpdatePetRequest;
@@ -76,5 +77,14 @@ class PetController extends Controller
         $update->update($request);
 
         return redirect()->route('pet.show', ['id' => $request->getId()]);
+    }
+
+    public function delete(
+        int $id,
+        Delete $delete
+    ) {
+        $status = $delete->delete($id);
+
+        return redirect()->route('index')->with("message", $status->getMessage());
     }
 }

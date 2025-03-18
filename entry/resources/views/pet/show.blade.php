@@ -21,5 +21,14 @@
 
         <br>
         <a href="{{ route('pet.edit', ['id' => $pet->getId()]) }}"  class="btn btn-primary">Edit</a>
+
+        <form id="delete-form" class="mt-2" method="POST" action="{{ route('pet.delete', ['id' => $pet->getId()]) }}">
+            @csrf
+            @method('DELETE')
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger" value="Delete Pet">
+            </div>
+        </form>
     </div>
 @endsection
