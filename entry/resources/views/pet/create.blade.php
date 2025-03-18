@@ -34,9 +34,7 @@
                 <label for="status">Status:</label>
                 <select class="form-select" id="status" name="status">
                     @foreach($statuses as $key => $status)
-                        <option value="{{ $key }}">
-                            {{ $status }}
-                        </option>
+                        <option value="{{ $key }}">{{ $status }}</option>
                     @endforeach
                 </select>
             </div>

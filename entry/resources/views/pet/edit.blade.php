@@ -55,10 +55,8 @@
                 @foreach($pet->getTags() as $key => $tag)
                     <div class="form-group">
                         <label for="tag{{$key}}">Tag</label>
-                        <input type="number" name="tags[{{$key}}][id]" id="tag_id{{$key}}" class="form-control"
-                               placeholder="Tag id" value="{{$tag['id']}}" required>
-                        <input type="text" name="tags[{{$key}}][name]" id="tag_name{{$key}}" class="form-control"
-                               placeholder="Tag name" value="{{$tag['name']}}" required>
+                        <input type="number" name="tags[{{$key}}][id]" id="tag_id{{$key}}" class="form-control" placeholder="Tag id" value="{{$tag['id']}}" required>
+                        <input type="text" name="tags[{{$key}}][name]" id="tag_name{{$key}}" class="form-control" placeholder="Tag name" value="{{$tag['name']}}" required>
                         @if($key > 0)
                             <button type="button" class="btn btn-danger btn-sm remove-tag">Remove</button>
                         @endif
