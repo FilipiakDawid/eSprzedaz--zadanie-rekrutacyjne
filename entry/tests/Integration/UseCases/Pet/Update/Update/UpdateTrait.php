@@ -11,7 +11,7 @@ use UseCases\Contracts\Requests\IUpdatePetRequest;
 
 trait UpdateTrait
 {
-    public function mockRequest(): IUpdatePetRequest
+    private function mockRequest(): IUpdatePetRequest
     {
         $tags = $this->app->make(Collection::class);
         $tags->push(['name' => 'new Tag']);
@@ -34,7 +34,7 @@ trait UpdateTrait
         return $request;
     }
 
-    public function mockResponse(): array
+    private function mockResponse(): array
     {
         return [
             'id' => 1,

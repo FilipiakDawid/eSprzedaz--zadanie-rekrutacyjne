@@ -6,7 +6,7 @@ namespace Tests\Smoke\App\Http\Controllers\PetController\FindById;
 
 trait PetControllerTrait
 {
-    public function mockPetResponse(): array
+    private function mockPetResponse(): array
     {
         return [
             'id' => 1,

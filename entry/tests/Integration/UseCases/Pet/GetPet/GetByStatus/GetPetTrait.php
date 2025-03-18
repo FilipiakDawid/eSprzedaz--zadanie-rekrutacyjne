@@ -10,7 +10,7 @@ use UseCases\Contracts\Requests\IPetStatus;
 
 trait GetPetTrait
 {
-    public function mockPetStatus(): IPetStatus
+    private function mockPetStatus(): IPetStatus
     {
         $m = m::mock(IPetStatus::class);
         $m->expects('getStatus')->andReturn([PetStatus::Available->value]);

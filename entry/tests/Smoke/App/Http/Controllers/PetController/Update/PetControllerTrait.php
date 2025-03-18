@@ -6,7 +6,7 @@ namespace Tests\Smoke\App\Http\Controllers\PetController\Update;
 
 trait PetControllerTrait
 {
-    public function makeRequest(): array
+    private function makeRequest(): array
     {
         return [
             'id' => 1,

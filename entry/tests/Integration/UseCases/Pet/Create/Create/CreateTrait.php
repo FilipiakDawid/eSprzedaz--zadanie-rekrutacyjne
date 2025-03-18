@@ -11,7 +11,7 @@ use UseCases\Contracts\Requests\IPetRequest;
 
 trait CreateTrait
 {
-    public function mockRequest(): IPetRequest
+    private function mockRequest(): IPetRequest
     {
         $tags = $this->app->make(Collection::class);
         $tags->push(['name' => 'new Tag']);
@@ -32,7 +32,7 @@ trait CreateTrait
         return $request;
     }
 
-    public function mockResponse(): array
+    private function mockResponse(): array
     {
         return [
             'id' => 1,

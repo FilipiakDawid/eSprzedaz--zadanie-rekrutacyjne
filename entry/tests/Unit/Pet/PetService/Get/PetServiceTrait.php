@@ -13,7 +13,7 @@ use UseCases\Contracts\Requests\IPetStatus;
 trait PetServiceTrait
 {
 
-    public function mockPetStatus(): IPetStatus
+    private function mockPetStatus(): IPetStatus
     {
         $m = m::mock(IPetStatus::class);
         $m->expects('getStatus')->andReturn([PetStatus::Available->value]);
@@ -21,7 +21,7 @@ trait PetServiceTrait
         return $m;
     }
 
-    public function mockResponseFactory(array $response): void
+    private function mockResponseFactory(array $response): void
     {
         $m = m::mock(ResponseFactory::class);
         $collection = new Collection($response);

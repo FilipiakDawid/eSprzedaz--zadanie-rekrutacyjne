@@ -14,7 +14,7 @@ use UseCases\Contracts\Pet\Entities\IPet;
 
 trait PetServiceTrait
 {
-    public function mockPet(): IPet
+    private function mockPet(): IPet
     {
         $m = m::mock(Pet::class);
         $m->expects('getId')->andReturn(1);
@@ -31,7 +31,7 @@ trait PetServiceTrait
         return $m;
     }
 
-    public function mockResponseFactory(IPet $pet): void
+    private function mockResponseFactory(IPet $pet): void
     {
         $m = m::mock(ResponseFactory::class);
         $m->expects('proceedPetResponse')->andReturn($pet);

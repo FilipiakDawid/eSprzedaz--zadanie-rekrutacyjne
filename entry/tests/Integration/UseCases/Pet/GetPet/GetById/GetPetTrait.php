@@ -6,7 +6,7 @@ namespace Tests\Integration\UseCases\Pet\GetPet\GetById;
 
 trait GetPetTrait
 {
-    public function mockResponse(): array
+    private function mockResponse(): array
     {
         return [
             'id' => 1,

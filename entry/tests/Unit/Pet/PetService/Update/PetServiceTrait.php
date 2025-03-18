@@ -13,14 +13,14 @@ use UseCases\Contracts\Requests\IUpdatePetRequest;
 
 trait PetServiceTrait
 {
-    public function mockResponseFactory(int $id): void
+    private function mockResponseFactory(int $id): void
     {
         $m = m::mock(ResponseFactory::class);
         $m->expects('proceedIdResponse')->andReturn($id);
         $this->instance(ResponseFactory::class, $m);
     }
 
-    public function mockRequest(): IPetRequest
+    private function mockRequest(): IPetRequest
     {
         $tags = $this->app->make(Collection::class);
         $tags->push(['name' => 'new Tag']);
@@ -43,7 +43,7 @@ trait PetServiceTrait
         return $request;
     }
 
-    public function mockResponse(): array
+    private function mockResponse(): array
     {
         return [
             'id' => 1,
