@@ -94,8 +94,27 @@ class ResponseFactory
         }
     }
 
+    public function proceedUploadResponse(Response $response): IStatus
+    {
+        switch ($response->status()) {
+            case "200":
+                return $this->createUploadStatus();
+            case "400":
+                throw new BadRequestException('Provided invalid ID');
+            case "404":
+                throw new NotFoundException('Pet Not Found');
+            default:
+                throw new ApiException($response->getStatusCode());
+        }
+    }
+
     private function createStatus(): IStatus
     {
         return new Status('Pet successfully removed');
+    }
+
+    private function createUploadStatus(): IStatus
+    {
+        return new Status('Image successfully added');
     }
 }

@@ -22,7 +22,7 @@ trait PetServiceTrait
     private function mockResponseFactory(IStatus $status): void
     {
         $m = m::mock(ResponseFactory::class);
-        $m->expects('proceedRemoveResponse')->andReturn($status);
+        $m->expects('proceedUploadResponse')->andReturn($status);
         $this->instance(ResponseFactory::class, $m);
     }
 

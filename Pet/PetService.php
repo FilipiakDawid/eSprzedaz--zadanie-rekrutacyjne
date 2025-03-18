@@ -117,6 +117,6 @@ class PetService implements IPetService
             ->post($this->url->uploadImage())
         ;
 
-        return $this->response_factory->proceedRemoveResponse($response);
+        return $this->response_factory->proceedUploadResponse($response);
     }
 }
