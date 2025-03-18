@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Pet;
 
-use Pet\Entities\Pet;
-use Pet\Entities\Category;
-use App\Models\Enums\PetStatus;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Client\Factory;
 use UseCases\Contracts\Pet\IPetService;
 use UseCases\Contracts\Pet\Entities\IPet;
 use UseCases\Contracts\Requests\IPetStatus;
 use UseCases\Contracts\Requests\IPetRequest;
+use UseCases\Contracts\Pet\Entities\IStatus;
 use UseCases\Contracts\Requests\IUpdatePetRequest;
 use Illuminate\Contracts\Config\Repository as ConfigContract;
-use function Symfony\Component\Translation\t;
 
 class PetService implements IPetService
 {
@@ -94,5 +91,17 @@ class PetService implements IPetService
         ]);
 
         return $this->response_factory->proceedIdResponse($response);
+    }
+
+    public function delete(int $id): IStatus
+    {
+        $response = $this->http
+            ->withHeader($this->header, $this->secret)
+            ->withUrlParameters([
+                'id' => $id,
+            ])->delete($this->url->findById())
+        ;
+
+        return $this->response_factory->proceedRemoveResponse($response);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pet;
 
 use Pet\Entities\Pet;
+use Pet\Entities\Status;
 use Pet\Entities\Category;
 use App\Models\Enums\PetStatus;
 use Illuminate\Support\Collection;
@@ -15,6 +16,7 @@ use App\Exceptions\Api\NotFoundException;
 use App\Exceptions\Api\BadRequestException;
 use App\Exceptions\Api\ValidationException;
 use Illuminate\Foundation\Application as App;
+use UseCases\Contracts\Pet\Entities\IStatus;
 
 class ResponseFactory
 {
@@ -84,5 +86,24 @@ class ResponseFactory
         );
 
         return $pet;
+    }
+
+    public function proceedRemoveResponse(Response $response): IStatus
+    {
+        switch ($response->status()) {
+            case "200":
+                return $this->createStatus();
+            case "400":
+                throw new BadRequestException('Provided invalid ID');
+            case "404":
+                throw new NotFoundException('Pet Not Found');
+            default:
+                throw new ApiException($response->getStatusCode());
+        }
+    }
+
+    private function createStatus(): IStatus
+    {
+        return new Status('Pet successfully removed');
     }
 }
