@@ -5,12 +5,20 @@ declare(strict_types=1);
 namespace Tests\Unit\Pet\PetService\Create;
 
 use Mockery as m;
+use Pet\ResponseFactory;
 use App\Models\Enums\PetStatus;
 use Illuminate\Support\Collection;
 use UseCases\Contracts\Requests\IPetRequest;
 
 trait PetServiceTrait
 {
+    public function mockResponseFactory(int $id): void
+    {
+        $m = m::mock(ResponseFactory::class);
+        $m->expects('proceedIdResponse')->andReturn($id);
+        $this->instance(ResponseFactory::class, $m);
+    }
+
     public function mockRequest(): IPetRequest
     {
         $tags = $this->app->make(Collection::class);

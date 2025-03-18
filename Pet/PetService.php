@@ -15,6 +15,7 @@ use UseCases\Contracts\Requests\IPetStatus;
 use UseCases\Contracts\Requests\IPetRequest;
 use UseCases\Contracts\Requests\IUpdatePetRequest;
 use Illuminate\Contracts\Config\Repository as ConfigContract;
+use function Symfony\Component\Translation\t;
 
 class PetService implements IPetService
 {
@@ -76,7 +77,7 @@ class PetService implements IPetService
             'photoUrls' => $pet_request->getPhotoUrls(),
         ]);
 
-        return $response->json('id');
+        return $this->response_factory->proceedIdResponse($response);
     }
 
     public function update(IUpdatePetRequest $pet_request): int
@@ -92,6 +93,6 @@ class PetService implements IPetService
             'photoUrls' => $pet_request->getPhotoUrls(),
         ]);
 
-        return $response->json('id');
+        return $this->response_factory->proceedIdResponse($response);
     }
 }

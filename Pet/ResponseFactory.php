@@ -13,6 +13,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Container\Attributes\Log;
 use App\Exceptions\Api\NotFoundException;
 use App\Exceptions\Api\BadRequestException;
+use App\Exceptions\Api\ValidationException;
 use Illuminate\Foundation\Application as App;
 
 class ResponseFactory
@@ -37,7 +38,6 @@ class ResponseFactory
 
     public function proceedPetResponse(Response $response): Pet
     {
-
         switch ($response->status()) {
             case "200":
                 return $this->createPet($response);
@@ -45,6 +45,22 @@ class ResponseFactory
                 throw new BadRequestException('Provided invalid ID');
             case "404":
                 throw new NotFoundException('Pet Not Found');
+            default:
+                throw new ApiException($response->getStatusCode());
+        }
+    }
+
+    public function proceedIdResponse(Response $response): int
+    {
+        switch ($response->status()) {
+            case "200":
+                return $response->json('id');
+            case "400":
+                throw new BadRequestException('Provided invalid ID');
+            case "404":
+                throw new NotFoundException('Pet Not Found');
+            case "405":
+                throw new ValidationException('Provided invalid data');
             default:
                 throw new ApiException($response->getStatusCode());
         }
