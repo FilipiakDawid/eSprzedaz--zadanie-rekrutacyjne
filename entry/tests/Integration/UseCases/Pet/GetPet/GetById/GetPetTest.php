@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Pet\GetByStatus;
+namespace Tests\Integration\UseCases\Pet\GetPet\GetById;
 
 use Tests\TestCase;
 use UseCases\Pet\GetPet;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
+use UseCases\Contracts\Pet\Entities\IPet;
 
 class GetPetTest extends TestCase
 {
@@ -17,16 +17,18 @@ class GetPetTest extends TestCase
     private GetPet $use_case;
 
     #[Test]
-    public function getByStatus(): void
+    public function getById(): void
     {
         // GIVEN
-        $pet_status = $this->mockPetStatus();
+        $response = $this->mockResponse();
+
+        Http::fake(['*' => Http::response($response, 200)]);
 
         // WHEN
-        $result = $this->service = $this->use_case->getByStatus($pet_status);
+        $result = $this->service = $this->use_case->getById(1);
 
         // THEN
-        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertInstanceOf(IPet::class, $result);
     }
 
     protected function setUp(): void
@@ -34,7 +36,6 @@ class GetPetTest extends TestCase
         parent::setUp();
 
         $this->use_case = $this->app->make(GetPet::class);
-        Http::preventStrayRequests();
-        Http::fake();
+        Http::preventStrayRequests();;
     }
 }

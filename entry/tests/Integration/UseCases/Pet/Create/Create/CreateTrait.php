@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Pet\Create\GetByStatus;
+namespace Tests\Integration\UseCases\Pet\Create\Create;
 
 use Mockery as m;
 use App\Models\Enums\PetStatus;

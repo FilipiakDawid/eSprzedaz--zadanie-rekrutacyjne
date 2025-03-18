@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Pet\Update\Update;
+namespace Tests\Integration\UseCases\Pet\Update\Update;
 
 use Mockery as m;
 use App\Models\Enums\PetStatus;

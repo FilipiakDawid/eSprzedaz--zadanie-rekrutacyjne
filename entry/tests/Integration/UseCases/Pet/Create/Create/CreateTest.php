@@ -2,40 +2,40 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Pet\GetById;
+namespace Tests\Integration\UseCases\Pet\Create\Create;
 
 use Tests\TestCase;
-use UseCases\Pet\GetPet;
+use UseCases\Pet\Create;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
-use UseCases\Contracts\Pet\Entities\IPet;
 
-class GetPetTests extends TestCase
+class CreateTest extends TestCase
 {
-    use GetPetTrait;
+    use CreateTrait;
 
-    private GetPet $use_case;
+    private Create $use_case;
 
     #[Test]
-    public function getById(): void
+    public function create(): void
     {
         // GIVEN
+        $request = $this->mockRequest();
         $response = $this->mockResponse();
 
         Http::fake(['*' => Http::response($response, 200)]);
 
         // WHEN
-        $result = $this->service = $this->use_case->getById(1);
+        $result = $this->service = $this->use_case->create($request);
 
         // THEN
-        $this->assertInstanceOf(IPet::class, $result);
+        $this->assertEquals(1, $result);
     }
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->use_case = $this->app->make(GetPet::class);
+        $this->use_case = $this->app->make(Create::class);
         Http::preventStrayRequests();;
     }
 }

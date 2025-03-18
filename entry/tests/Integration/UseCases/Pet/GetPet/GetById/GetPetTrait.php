@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Pet\GetById;
+namespace Tests\Integration\UseCases\Pet\GetPet\GetById;
 
 trait GetPetTrait
 {

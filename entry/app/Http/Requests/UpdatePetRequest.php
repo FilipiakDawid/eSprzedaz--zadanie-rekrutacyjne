@@ -35,11 +35,6 @@ class UpdatePetRequest extends FormRequest implements IUpdatePetRequest
         $this->request->add(['id' => $this->route()->parameter('id')]);
     }
 
-    public function getPetId(): int
-    {
-        return (int)$this->input('id');
-    }
-
     public function getName(): string
     {
         return $this->input('name');
@@ -67,6 +62,6 @@ class UpdatePetRequest extends FormRequest implements IUpdatePetRequest
 
     public function getId(): int
     {
-        return $this->getId();
+        return (int) $this->input('id');
     }
 }

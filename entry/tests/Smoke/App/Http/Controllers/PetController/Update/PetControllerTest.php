@@ -8,7 +8,7 @@ use Tests\TestCase;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
 
-class PetController extends TestCase
+class PetControllerTest extends TestCase
 {
     use PetControllerTrait;
 
