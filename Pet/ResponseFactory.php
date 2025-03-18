@@ -11,21 +11,13 @@ use App\Models\Enums\PetStatus;
 use Illuminate\Support\Collection;
 use App\Exceptions\Api\ApiException;
 use Illuminate\Http\Client\Response;
-use Illuminate\Container\Attributes\Log;
 use App\Exceptions\Api\NotFoundException;
 use App\Exceptions\Api\BadRequestException;
 use App\Exceptions\Api\ValidationException;
-use Illuminate\Foundation\Application as App;
 use UseCases\Contracts\Pet\Entities\IStatus;
 
 class ResponseFactory
 {
-    public function __construct(
-        private App $app,
-        private Log $log)
-    {
-    }
-
     public function proceedPetsResponse(Response $response): Collection
     {
         switch ($response->status()) {
