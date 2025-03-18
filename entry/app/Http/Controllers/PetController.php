@@ -9,6 +9,7 @@ use UseCases\Pet\Delete;
 use App\Models\Enums\PetStatus;
 use App\Http\Requests\CreatePetRequest;
 use App\Http\Requests\UpdatePetRequest;
+use App\Http\Requests\UploadImageRequest;
 use App\Http\Requests\GetPetByStatusRequest;
 
 class PetController extends Controller
@@ -86,5 +87,16 @@ class PetController extends Controller
         $status = $delete->delete($id);
 
         return redirect()->route('index')->with("message", $status->getMessage());
+    }
+
+    public function uploadImage(
+        UploadImageRequest $request,
+        Update $update,
+        int $id
+    ) {
+
+        $status = $update->uploadImage($request, $id);
+
+        return redirect()->route('pet.show', ['id' => $id])->with("message", $status->getMessage());
     }
 }

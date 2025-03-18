@@ -67,6 +67,19 @@
             <button type="button" class="btn btn-secondary mt-2 mb-2" id="add-tag">Add Tag</button>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
+
+        <div class="mt-4">
+            <form action="{{ route('pet.uploadImage', ['id' => $pet->getId()]) }}" method="POST"
+                  enctype="multipart/form-data">
+                @csrf
+                <div class="mb-3">
+                    <label for="image" class="form-label">Select image</label>
+                    <input type="file" class="form-control" id="image" name="image"
+                           accept="image/jpeg, image/jpg, image/png" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
     </div>
 
 @endsection
